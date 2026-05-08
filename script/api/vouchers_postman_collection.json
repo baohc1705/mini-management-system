@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "b9d0ebc3-6259-44a3-ad7d-47e0248ff35a",
+		"name": "Vouchers API",
+		"description": "Collection for testing Vouchers CRUD operations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all vouchers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/vouchers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get paginated vouchers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/vouchers/page?page=1&size=5",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers",
+						"page"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new voucher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"{{voucherCode}}\",\n  \"discountPercent\": 20,\n  \"quantity\": 100,\n  \"expiredDate\": \"2026-12-31\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/vouchers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a duplicate voucher (Should Fail)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"{{voucherCode}}\",\n  \"discountPercent\": 10,\n  \"quantity\": 50,\n  \"expiredDate\": \"2026-12-31\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/vouchers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create invalid voucher (Invalid Discount - Should Fail)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"INVALID_DISCOUNT\",\n  \"discountPercent\": 150,\n  \"quantity\": 100,\n  \"expiredDate\": \"2026-12-31\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/vouchers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create invalid voucher (Past Date - Should Fail)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"code\": \"PAST_DATE\",\n  \"discountPercent\": 10,\n  \"quantity\": 100,\n  \"expiredDate\": \"2020-01-01\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/vouchers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update voucher",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{voucherId}},\n  \"discountPercent\": 25,\n  \"quantity\": 150,\n  \"expiredDate\": \"2026-12-31\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/vouchers/{{voucherId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers",
+						"{{voucherId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search voucher by code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/vouchers/search?code={{voucherCode}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers",
+						"search"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{voucherCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete voucher (Soft Delete)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/vouchers/{{voucherId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"vouchers",
+						"{{voucherId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "voucherId",
+			"value": "1"
+		},
+		{
+			"key": "voucherCode",
+			"value": "VOUCHER2026"
+		}
+	]
+}

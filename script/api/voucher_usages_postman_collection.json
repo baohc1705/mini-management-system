@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "7c15f675-e50a-4b0c-aa7a-432945a08ada",
+		"name": "Voucher Usages API",
+		"description": "Collection for testing Voucher Usage operations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Use a voucher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": {{userId}},\n  \"voucherId\": {{voucherId}}\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/voucher-usages/use",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"voucher-usages",
+						"use"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all voucher usages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/voucher-usages",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"voucher-usages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get paginated voucher usages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/voucher-usages/page?page=1&size=5",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"voucher-usages",
+						"page"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "userId",
+			"value": "1"
+		},
+		{
+			"key": "voucherId",
+			"value": "1"
+		}
+	]
+}
