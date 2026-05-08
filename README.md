@@ -1,6 +1,22 @@
 # Mini Management System
 
+**Github Repository:** [https://github.com/baohc1705/mini-management-system.git](https://github.com/baohc1705/mini-management-system.git)
+
 Hệ thống quản lý Người dùng và Voucher (Khuyến mãi) đơn giản, hiệu quả với giao diện hiện đại và trải nghiệm người dùng tối ưu.
+
+## Giao diện ứng dụng
+
+| ![Danh sách người dùng](screenshot/1.png) |
+| :---: |
+| *Giao diện quản lý danh sách người dùng* |
+
+| ![Quản lý Voucher](screenshot/2.png) |
+| :---: |
+| *Giao diện quản lý danh sách Voucher* |
+
+| ![Sử dụng Voucher](screenshot/3.png) |
+| :---: |
+| *Giao diện sử dụng Voucher cho người dùng* |
 
 ## Công nghệ sử dụng
 
