@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, History } from 'lucide-react';
+import { History } from 'lucide-react';
 import voucherUsageApi from '../../api/voucher-usage.api';
 import type { VoucherUsage } from '../../utils/types';
+import Pagination from '../../components/common/Pagination';
 
 const VoucherUsageList: React.FC = () => {
   const [usages, setUsages] = useState<VoucherUsage[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [size] = useState(10);
+  const [size, setSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
 
   const fetchUsages = async () => {
     try {
@@ -17,6 +19,7 @@ const VoucherUsageList: React.FC = () => {
       if (apiResponse.status) {
         setUsages(apiResponse.data.items);
         setTotalPages(apiResponse.data.totalPages);
+        setTotalItems(apiResponse.data.totalItems);
       }
     } catch (error) {
       console.error('Failed to fetch voucher usages', error);
@@ -27,10 +30,10 @@ const VoucherUsageList: React.FC = () => {
 
   useEffect(() => {
     fetchUsages();
-  }, [page]);
+  }, [page, size]);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 w-full overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 w-full overflow-hidden flex flex-col">
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center space-x-3">
           <div className="p-2 bg-indigo-50 rounded-lg">
@@ -40,7 +43,7 @@ const VoucherUsageList: React.FC = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto flex-1">
         <table className="w-full text-left text-[13px]">
           <thead>
             <tr className="border-b border-gray-200 text-gray-900 font-bold uppercase tracking-wider">
@@ -74,29 +77,17 @@ const VoucherUsageList: React.FC = () => {
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-6 px-6 pb-6">
-          <p className="text-sm text-gray-500">
-            Hiển thị trang {page} trên {totalPages}
-          </p>
-          <div className="flex items-center space-x-2">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(p => p - 1)}
-              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              disabled={page === totalPages}
-              onClick={() => setPage(p => p + 1)}
-              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      )}
+      <div className="flex items-center p-6 border-t border-gray-100">
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          pageSize={size}
+          onPageChange={setPage}
+          onPageSizeChange={setSize}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 };

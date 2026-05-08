@@ -4,11 +4,12 @@ import Header from './components/layout/Header';
 import VoucherList from './pages/Vouchers/VoucherList';
 import UserList from './pages/Users/UserList';
 import VoucherUsageList from './pages/Vouchers/VoucherUsageList';
+import VoucherIssue from './pages/Vouchers/VoucherIssue';
 
 function App() {
   return (
     <Router>
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen bg-[#f8fafc]">
         <Sidebar />
         
         <div className="flex-1 ml-64">
@@ -17,6 +18,7 @@ function App() {
           <main className="p-8">
             <Routes>
               <Route path="/" element={<DashboardDemo />} />
+              <Route path="/voucher-issue" element={<VoucherIssue />} />
               <Route path="/vouchers" element={<VoucherList />} />
               <Route path="/users" element={<UserList />} />
               <Route path="/voucher-history" element={<VoucherUsageList />} />

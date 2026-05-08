@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Search, Edit2, Trash2, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, Play } from 'lucide-react';
 import voucherApi from '../../api/voucher.api';
 import voucherUsageApi from '../../api/voucher-usage.api';
 import type { Voucher } from '../../utils/types';
@@ -9,13 +9,15 @@ import UseVoucherModal from './UseVoucherModal';
 import Toast from '../../components/common/Toast';
 import type { ToastType } from '../../components/common/Toast';
 import ConfirmModal from '../../components/common/ConfirmModal';
+import Pagination from '../../components/common/Pagination';
 
 const VoucherList: React.FC = () => {
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [size] = useState(10);
+  const [size, setSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUseModalOpen, setIsUseModalOpen] = useState(false);
@@ -36,6 +38,7 @@ const VoucherList: React.FC = () => {
       if (apiResponse.status) {
         setVouchers(apiResponse.data.items);
         setTotalPages(apiResponse.data.totalPages);
+        setTotalItems(apiResponse.data.totalItems);
       }
     } catch (error) {
       console.error('Failed to fetch vouchers', error);
@@ -46,7 +49,7 @@ const VoucherList: React.FC = () => {
 
   useEffect(() => {
     fetchVouchers();
-  }, [page]);
+  }, [page, size]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +63,7 @@ const VoucherList: React.FC = () => {
       if (apiResponse.status) {
         setVouchers(apiResponse.data ? [apiResponse.data] : []);
         setTotalPages(1);
+        setTotalItems(apiResponse.data ? 1 : 0);
       }
     } catch (error) {
       console.error('Search failed', error);
@@ -141,7 +145,7 @@ const VoucherList: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 w-full overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 w-full overflow-hidden flex flex-col">
       <div className="p-6 border-b border-gray-100">
         <div className="flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
           <h2 className="text-2xl font-bold text-gray-900">Danh sách mã giảm giá</h2>
@@ -169,7 +173,7 @@ const VoucherList: React.FC = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto flex-1">
         <table className="w-full text-left text-[13px]">
           <thead>
             <tr className="border-b border-gray-200 text-gray-900 font-bold uppercase tracking-wider">
@@ -237,29 +241,17 @@ const VoucherList: React.FC = () => {
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-6 px-6 pb-6">
-          <p className="text-sm text-gray-500">
-            Hiển thị trang {page} trên {totalPages}
-          </p>
-          <div className="flex items-center space-x-2">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(p => p - 1)}
-              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              disabled={page === totalPages}
-              onClick={() => setPage(p => p + 1)}
-              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      )}
+      <div className="flex items-center p-6 border-t border-gray-100">
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          pageSize={size}
+          onPageChange={setPage}
+          onPageSizeChange={setSize}
+          loading={loading}
+        />
+      </div>
 
       <Modal
         isOpen={isModalOpen}
