@@ -15,6 +15,20 @@ public class Voucher {
     private VoucherStatus status;
     private LocalDateTime createdAt;
 
+    public boolean isExpired() {
+        return expiredDate != null && expiredDate.isBefore(LocalDate.now());
+    }
+
+    public boolean isActive() {
+        return status == VoucherStatus.ACTIVE;
+    }
+
+    public void use() {
+        if (quantity > 0) {
+            this.quantity--;
+        }
+    }
+
     private List<VoucherUsage> voucherUsages;
 
     public Voucher() {

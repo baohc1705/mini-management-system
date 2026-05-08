@@ -3,7 +3,7 @@ package com.baohc.minimanagementsystembe.domain.entities;
 import java.time.LocalDateTime;
 
 public class VoucherUsage {
-    private Long id;;
+    private Long id;
     private LocalDateTime usedAt;
 
     private User user;
