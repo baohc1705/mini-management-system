@@ -8,7 +8,7 @@ Hệ thống quản lý Người dùng và Voucher (Khuyến mãi) đơn giản,
 
 | ![Danh sách người dùng](screenshot/1.png) |
 | :---: |
-| *Giao diện quản lý danh sách người dùng* |
+| *Giao diện chọn voucher* |
 
 | ![Quản lý Voucher](screenshot/2.png) |
 | :---: |
@@ -16,7 +16,7 @@ Hệ thống quản lý Người dùng và Voucher (Khuyến mãi) đơn giản,
 
 | ![Sử dụng Voucher](screenshot/3.png) |
 | :---: |
-| *Giao diện sử dụng Voucher cho người dùng* |
+| *Giao diện quản lý user* |
 
 ## Công nghệ sử dụng
 
