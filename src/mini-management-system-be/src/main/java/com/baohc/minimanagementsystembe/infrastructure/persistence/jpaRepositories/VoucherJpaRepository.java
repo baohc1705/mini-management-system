@@ -14,12 +14,10 @@ public interface VoucherJpaRepository extends JpaRepository<VoucherJpaEntity, Lo
 
     boolean existsByCode(String code);
 
-    @Query("SELECT v FROM VoucherJpaEntity v " +
-            "WHERE v.status = com.baohc.minimanagementsystembe.domain.enums.VoucherStatus.ACTIVE " +
-            "ORDER BY v.createdAt DESC")
-    Page<VoucherJpaEntity> findAllPaginated(Pageable pageable);
+    @Query("SELECT v FROM VoucherJpaEntity v WHERE v.status = :status ORDER BY v.createdAt DESC")
+    Page<VoucherJpaEntity> findAllPaginated(Pageable pageable, com.baohc.minimanagementsystembe.domain.enums.VoucherStatus status);
 
-    @Query("SELECT COUNT(v) FROM VoucherJpaEntity v WHERE v.status = com.baohc.minimanagementsystembe.domain.enums.VoucherStatus.ACTIVE")
-    long countActiveVouchers();
+    @Query("SELECT COUNT(v) FROM VoucherJpaEntity v WHERE v.status = :status")
+    long countActiveVouchers(com.baohc.minimanagementsystembe.domain.enums.VoucherStatus status);
 
 }

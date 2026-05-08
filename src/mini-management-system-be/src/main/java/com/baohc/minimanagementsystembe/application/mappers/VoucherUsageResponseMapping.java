@@ -4,8 +4,6 @@ import com.baohc.minimanagementsystembe.application.dtos.response.VoucherUsageRe
 import com.baohc.minimanagementsystembe.domain.entities.VoucherUsage;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
 public class VoucherUsageResponseMapping {
     public VoucherUsageResponse toResponse(VoucherUsage usage) {

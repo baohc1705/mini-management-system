@@ -45,7 +45,7 @@ public class VoucherRepositoryImpl implements VoucherRepository {
 
     @Override
     public Page<Voucher> findAll(Pageable pageable) {
-        return voucherJpaRepository.findAllPaginated(pageable)
+        return voucherJpaRepository.findAllPaginated(pageable, VoucherStatus.ACTIVE)
                 .map(voucherJpaEntityMapping::toDomain);
     }
 
@@ -82,6 +82,6 @@ public class VoucherRepositoryImpl implements VoucherRepository {
 
     @Override
     public long count() {
-        return voucherJpaRepository.countActiveVouchers();
+        return voucherJpaRepository.countActiveVouchers(VoucherStatus.ACTIVE);
     }
 }
