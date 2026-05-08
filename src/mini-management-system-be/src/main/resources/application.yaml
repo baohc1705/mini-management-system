@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: mini-management-system-be
+  datasource:
+    url: "jdbc:mysql://localhost:3306/vti_test"
+    username: "root"
+  jpa:
+    show-sql: true
