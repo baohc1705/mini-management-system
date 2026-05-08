@@ -1,6 +1,5 @@
 package com.baohc.minimanagementsystembe.infrastructure.persistence.entities;
 
-import com.baohc.minimanagementsystembe.domain.entities.VoucherUsage;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

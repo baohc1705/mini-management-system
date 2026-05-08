@@ -20,7 +20,8 @@ public class Voucher {
     public Voucher() {
     }
 
-    public Voucher(Long id, String code, Integer discountPercent, Integer quantity, LocalDate expiredDate, VoucherStatus status, LocalDateTime createdAt) {
+    public Voucher(Long id, String code, Integer discountPercent, Integer quantity, LocalDate expiredDate,
+            VoucherStatus status, LocalDateTime createdAt) {
         this.id = id;
         this.code = code;
         this.discountPercent = discountPercent;

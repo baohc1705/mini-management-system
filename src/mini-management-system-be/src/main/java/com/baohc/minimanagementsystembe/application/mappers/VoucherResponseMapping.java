@@ -5,18 +5,18 @@ import com.baohc.minimanagementsystembe.application.dtos.request.UpdateVoucherRe
 import com.baohc.minimanagementsystembe.application.dtos.response.VoucherResponse;
 import com.baohc.minimanagementsystembe.domain.entities.Voucher;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
 public class VoucherResponseMapping {
     public VoucherResponse toResponse(Voucher voucher) {
         var voucherResponse = new VoucherResponse();
+        voucherResponse.setId(voucher.getId());
         voucherResponse.setCode(voucher.getCode());
         voucherResponse.setDiscountPercent(voucher.getDiscountPercent());
         voucherResponse.setQuantity(voucher.getQuantity());
         voucherResponse.setExpiredDate(voucher.getExpiredDate());
+        voucherResponse.setStatus(voucher.getStatus());
         voucherResponse.setCreatedAt(voucher.getCreatedAt());
         return voucherResponse;
     }
@@ -27,12 +27,12 @@ public class VoucherResponseMapping {
         voucher.setDiscountPercent(request.getDiscountPercent());
         voucher.setQuantity(request.getQuantity());
         voucher.setExpiredDate(request.getExpiredDate());
+        voucher.setStatus(com.baohc.minimanagementsystembe.domain.enums.VoucherStatus.ACTIVE);
         voucher.setCreatedAt(LocalDateTime.now());
         return voucher;
     }
 
     public Voucher update(Voucher voucher, UpdateVoucherRequest request) {
-        voucher.setId(request.getId());
         voucher.setDiscountPercent(request.getDiscountPercent());
         voucher.setQuantity(request.getQuantity());
         voucher.setExpiredDate(request.getExpiredDate());

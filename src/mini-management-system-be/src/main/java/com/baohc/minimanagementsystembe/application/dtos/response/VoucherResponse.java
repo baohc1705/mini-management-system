@@ -14,9 +14,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class VoucherResponse {
+    private Long id;
     private String code;
     private Integer discountPercent;
     private Integer quantity;
     private LocalDate expiredDate;
+    private VoucherStatus status;
     private LocalDateTime createdAt;
 }

@@ -12,6 +12,7 @@ public class VoucherJpaEntityMapping {
         voucher.setCode(voucherJpaEntity.getCode());
         voucher.setDiscountPercent(voucherJpaEntity.getDiscountPercent());
         voucher.setQuantity(voucherJpaEntity.getQuantity());
+        voucher.setExpiredDate(voucherJpaEntity.getExpiredDate());
         voucher.setStatus(voucherJpaEntity.getStatus());
         voucher.setCreatedAt(voucherJpaEntity.getCreatedAt());
         return voucher;
@@ -23,8 +24,10 @@ public class VoucherJpaEntityMapping {
         voucherJpaEntity.setCode(voucher.getCode());
         voucherJpaEntity.setDiscountPercent(voucher.getDiscountPercent());
         voucherJpaEntity.setQuantity(voucher.getQuantity());
+        voucherJpaEntity.setExpiredDate(voucher.getExpiredDate());
         voucherJpaEntity.setStatus(voucher.getStatus());
         voucherJpaEntity.setCreatedAt(voucher.getCreatedAt());
         return voucherJpaEntity;
     }
 }
+
