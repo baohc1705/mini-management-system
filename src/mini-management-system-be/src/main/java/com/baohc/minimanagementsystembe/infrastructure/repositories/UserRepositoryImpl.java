@@ -5,8 +5,13 @@ import com.baohc.minimanagementsystembe.domain.repositories.UserRepository;
 import com.baohc.minimanagementsystembe.infrastructure.persistence.entities.UserJpaEntity;
 import com.baohc.minimanagementsystembe.infrastructure.persistence.jpaRepositories.UserJpaRepository;
 import com.baohc.minimanagementsystembe.infrastructure.persistence.mappers.UserJpaEntityMapping;
+import com.baohc.minimanagementsystembe.domain.exceptions.AppException;
+import com.baohc.minimanagementsystembe.domain.exceptions.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,8 +24,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(Long id) {
-        UserJpaEntity userJpa= userJpaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        UserJpaEntity userJpa = userJpaRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         return userJpaEntityMapping.toDomain(userJpa);
     }
 
@@ -42,10 +47,30 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void update(User user) {
         var userJpaEntity = userJpaRepository.findById(user.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         userJpaEntity.setFullName(user.getFullName());
         userJpaEntity.setEmail(user.getEmail());
         userJpaEntity.setPhone(user.getPhone());
         userJpaRepository.save(userJpaEntity);
+    }
+
+    @Override
+    public long count() {
+        return userJpaRepository.count();
+    }
+
+    @Override
+    public void delete(Long id) {
+        var userJpaEntity = userJpaRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        //userJpaRepository.delete(userJpaEntity);
+        userJpaEntity.setCreatedAt(null);
+        userJpaRepository.save(userJpaEntity);
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return userJpaRepository.findAll(pageable)
+                .map(userJpaEntityMapping::toDomain);
     }
 }

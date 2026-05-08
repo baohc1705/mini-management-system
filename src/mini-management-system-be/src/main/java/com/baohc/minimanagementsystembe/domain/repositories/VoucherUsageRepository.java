@@ -1,5 +1,6 @@
 package com.baohc.minimanagementsystembe.domain.repositories;
 
-public interface VoucherUsageRepository {
+import com.baohc.minimanagementsystembe.domain.entities.VoucherUsage;
 
+public interface VoucherUsageRepository extends GenericRepository<VoucherUsage, Long> {
 }
